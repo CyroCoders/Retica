@@ -22,7 +22,7 @@ class request:
             key: value
             for key, value in [
                  x.split("=") for x in (
-                     self.path.split("?")[1].split("&") if "&" in self.path.split("?")[1] else self.path.split("?")[1]
+                    self.path.split("?")[1].split("&") if "&" in self.path.split("?")[1] else self.path.split("?")[1]
                 )
             ]
         } if "?" in self.path else {}
@@ -44,6 +44,8 @@ class request:
                 )
             ]
         } if "Cookie" in self.headers else {}
+
+        self.path = self.path.split("?")[0] if "?" in self.path else self.path
         
     def compile(self) -> str:
         return self.method + " " +  self.path + "?" + "&".join(["=".join([key, value]) for key, value in self.data["GET"].items()]) + " " + self.protocol + "\r\n" + "\r\n".join([key + ": " + value for key, value in self.headers.items()]) + "\r\n\r\n" + self.body
