@@ -10,10 +10,11 @@ class HTTP_Socket(object):
         self.port = port
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    def bind(self):
+    def bind(self,logger=None):
+        if logger:
+            logger.info(f"Listening On {self.host}:{self.port}")
         self.sock.bind((self.host, self.port))
         self.sock.listen(5)
-        print("Listening on {}:{}".format(self.host, self.port))
     
     def send(self, data):
         self.sock.send(data)

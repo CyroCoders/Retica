@@ -1,10 +1,13 @@
+from asyncio.log import logger
 from . import Worker, Request, Response
 import os, sys, select
 import threading
 import logging
 
 class Server:
-    def __init__(self, context, config=None):
+    def __init__(self, context, logger: logging.Logger=None, config :dict=None):
+        self.logger = logging.getLogger("SERVER") if logger is None else logger
+        logging.basicConfig(level=logging.INFO)
         self.config = config
         self.context = context
         self.endpoints = {}
@@ -20,8 +23,9 @@ class Server:
         return wrapper
 
     def run(self, sockets):
+        self.logger.info("Starting Server")
         for socket in sockets:
-            socket.bind()
+            socket.bind(logger=self.logger)
         while True:
             read_socks,_,_ = select.select(sockets, [], [])
             for sock in read_socks:
@@ -30,9 +34,9 @@ class Server:
             read_socks = []
 
     def handle_request(self, socket, address):
-        logging.info(f"New Connection From {address}")
         request = Request.request()
         request.parse(socket.recv(1024))
+        self.logger.info(f"New Connection From {address} For {request.path.decode()}")
         worker = Worker.Worker(self)
         if not request:
             return
