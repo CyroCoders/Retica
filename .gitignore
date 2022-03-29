@@ -134,3 +134,4 @@ dmypy.json
 setup.py
 src/CyroWebB/Production/__init__.py
 src/CyroWebB/_extensions.py
+main.py
