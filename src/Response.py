@@ -17,11 +17,10 @@ class response:
             key, value = line.split(": ")
             self.headers[key] = value
         self.body = "\r\n".join(lines[len(lines)-1:])
-        self.content_length = len(self.body)
 
     def compile(self) -> str:
+        self.content_length = len(self.body)
         self.headers["Content-Type"] = self.content_type
         self.headers["Content-Length"] = str(self.content_length)
         self.headers["Connection"] = self.connection
-        self.content_length = len(self.body)
         return (self.protocol + " " + self.status + "\r\n" + "\r\n".join([key + ": " + value for key, value in self.headers.items()]) + "\r\n\r\n" + self.body).encode()
