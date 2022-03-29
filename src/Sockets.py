@@ -12,6 +12,8 @@ class HTTP_Socket(object):
 
     def bind(self):
         self.sock.bind((self.host, self.port))
+        self.sock.listen(5)
+        print("Listening on {}:{}".format(self.host, self.port))
     
     def send(self, data):
         self.sock.send(data)
