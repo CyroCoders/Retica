@@ -8,25 +8,24 @@ class Worker:
         self.server = server
     
     def handle(self,socket: Union[Sockets.HTTP_Socket,Sockets.HTTP_Socket],request: Request.request):
-        pid = os.fork()
-        if pid == 0:
-            request.parse()
-            response = Response.Response(request)
-            path = request.path
-            for endpoint,handler in self.server.endpoints:
-                endpoint = "." + endpoint + "."
-                path = "." + path + "."
-                if endpoint[-1] == "/":
-                    endpoint = endpoint[:-1]
-                if endpoint[1] == "/":
-                    endpoint = endpoint[1:]
-                if path[-1] == "/":
-                    path = path[:-1]
-                if path[1] == "/":
-                    path = path[1:]
-                endpoint = endpoint[1:-1]
-                path = path[1:-1]
-                if parse.parse(endpoint, path):
-                    arguments = parse.parse(endpoint, path)
-                    handler(request, response, arguments)
-                    break
+        response = Response.response()
+        path = request.path
+        for endpoint, handler in self.server.endpoints.items():
+            endpoint = "." + endpoint + "."
+            path = "." + path.decode() + "."
+            if endpoint[-1] == "/":
+                endpoint = endpoint[:-1]
+            if endpoint[1] == "/":
+                endpoint = endpoint[1:]
+            if path[-1] == "/":
+                path = path[:-1]
+            if path[1] == "/":
+                path = path[1:]
+            endpoint = endpoint[1:-1]
+            path = path[1:-1]
+            if parse.parse(endpoint, path):
+                arguments = parse.parse(endpoint, path)
+                arguments = dict(arguments)
+                handler(request, response, **arguments)
+                print(response.compile())
+                socket.sendall(response.compile())
