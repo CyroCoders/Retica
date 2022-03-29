@@ -1,6 +1,9 @@
 import socket
 import ssl
 
+def gethostname():
+    return socket.gethostname()
+
 class HTTP_Socket(object):
     def __init__(self, host, port):
         self.host = host
