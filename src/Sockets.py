@@ -22,6 +22,9 @@ class HTTP_Socket(object):
     def close(self):
         self.sock.close()
 
+    def fileno(self):
+        return self.sock.fileno()
+
 class HTTPS_Socket(HTTP_Socket):
     def __init__(self, host, port, cert_file, key_file):
         super().__init__(host, port)
