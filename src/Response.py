@@ -23,4 +23,5 @@ class response:
         self.headers["Content-Type"] = self.content_type
         self.headers["Content-Length"] = str(self.content_length)
         self.headers["Connection"] = self.connection
-        return self.protocol + " " + self.status + "\r\n" + "\r\n".join([key + ": " + value for key, value in self.headers.items()]) + "\r\n\r\n" + self.body
+        self.content_length = len(self.body)
+        return (self.protocol + " " + self.status + "\r\n" + "\r\n".join([key + ": " + value for key, value in self.headers.items()]) + "\r\n\r\n" + self.body).encode()

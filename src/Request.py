@@ -1,6 +1,5 @@
 class request:
-    def __init__(self, string) -> None:
-        self.string = string
+    def __init__(self) -> None:
         self.method = None
         self.path = None
         self.protocol = None
@@ -8,44 +7,44 @@ class request:
         self.data = {}
         self.body = None
 
-    def parse(self) -> None:
-        lines = self.string.split("\r\n")
-        self.method, self.path, self.protocol = lines[0].split(" ")
+    def parse(self, string) -> None:
+        lines = string.split(b"\r\n")
+        self.method, self.path, self.protocol = lines[0].split(b" ")
         for line in lines[1:]:
-            if line == "":
+            if line == b"":
                 break
-            key, value = line.split(": ")
+            key, value = line.split(b": ")
             self.headers[key] = value
-        self.body = "\r\n".join(lines[len(lines)-1:])
+        self.body = b"\r\n".join(lines[len(lines)-1:])
 
         self.data["GET"] = {
             key: value
             for key, value in [
-                 x.split("=") for x in (
-                    self.path.split("?")[1].split("&") if "&" in self.path.split("?")[1] else self.path.split("?")[1]
+                 x.split(b"=") for x in (
+                    self.path.split(b"?")[1].split(b"&") if b"&" in self.path.split(b"?")[1] else self.path.split(b"?")[1]
                 )
             ]
-        } if "?" in self.path else {}
+        } if b"?" in self.path else {}
 
         self.data["POST"] = {
             key: value
             for key, value in [
-                x.split("=") for x in (
-                    self.body.split("&") if "&" in self.body else self.body
+                x.split(b"=") for x in (
+                    self.body.split(b"&") if b"&" in self.body else self.body
                 )
             ]
-        } if self.method.upper() == "POST" else {}
+        } if self.method.upper() == b"POST" else {}
 
         self.data["COOKIE"] = {
             key: value 
             for key, value in [
-                x.split("=") for x in (
-                    self.headers["Cookie"].split("; ") if "Cookie" in self.headers else []
+                x.split(b"=") for x in (
+                    self.headers["Cookie"].split(b"; ") if b"Cookie" in self.headers else []
                 )
             ]
-        } if "Cookie" in self.headers else {}
+        } if b"Cookie" in self.headers else {}
 
-        self.path = self.path.split("?")[0] if "?" in self.path else self.path
+        self.path = self.path.split(b"?")[0] if b"?" in self.path else self.path
         
     def compile(self) -> str:
-        return self.method + " " +  self.path + "?" + "&".join(["=".join([key, value]) for key, value in self.data["GET"].items()]) + " " + self.protocol + "\r\n" + "\r\n".join([key + ": " + value for key, value in self.headers.items()]) + "\r\n\r\n" + self.body
+        return self.method + b" " +  self.path + b"?" + b"&".join(["=".join([key, value]) for key, value in self.data["GET"].items()]) + b" " + self.protocol + b"\r\n" + b"\r\n".join([key + b": " + value for key, value in self.headers.items()]) + b"\r\n\r\n" + self.body
