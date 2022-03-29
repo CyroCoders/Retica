@@ -27,5 +27,4 @@ class Worker:
                 arguments = parse.parse(endpoint, path)
                 arguments = dict(arguments)
                 handler(request, response, **arguments)
-                print(response.compile())
                 socket.sendall(response.compile())
