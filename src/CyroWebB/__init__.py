@@ -29,10 +29,10 @@ class Server:
         while True:
             plugin_instance.run()
 
-    def create_endpoint(self, path):
+    def create_endpoint(self, path, conditional=None):
         def wrapper(handler):
             if(not(self.endpoints.__contains__(path))):
-                self.endpoints[path] = handler
+                self.endpoints[path] = (handler, conditional)
                 return handler
             else:
                 raise AssertionError(f"Endpoint {path}:{handler} Already Exists!")#self.error["urlcatcherexists"])
