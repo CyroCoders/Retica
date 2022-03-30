@@ -18,7 +18,7 @@ class request:
         self.body = b"\r\n".join(lines[len(lines)-1:])
 
         self.data["GET"] = {
-            key: value
+            key.decode(): value.decode()
             for key, value in [
                  x.split(b"=") for x in (
                     self.path.split(b"?")[1].split(b"&") if b"&" in self.path.split(b"?")[1] else self.path.split(b"?")[1]
@@ -27,7 +27,7 @@ class request:
         } if b"?" in self.path else {}
 
         self.data["POST"] = {
-            key: value
+            key.decode(): value.decode()
             for key, value in [
                 x.split(b"=") for x in (
                     self.body.split(b"&") if b"&" in self.body else self.body
