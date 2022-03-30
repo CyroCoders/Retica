@@ -8,6 +8,3 @@ class Plugin(object):
 
     def intercept_response(self, response):
         pass
-
-    def run(self):
-        pass
