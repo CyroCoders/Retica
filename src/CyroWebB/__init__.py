@@ -1,7 +1,6 @@
-from asyncio.log import logger
-from . import Worker, Request, Response
+from . import Worker, Request, Response, Plugin
 import os, sys, select
-import threading
+import threading, multiprocessing
 import logging
 
 class Server:
@@ -12,6 +11,23 @@ class Server:
         self.context = context
         self.endpoints = {}
         self.workers = []
+        self.plugins = []
+        self.runner_plugins = []
+
+    def use_plugin(self, plugin, config):
+        if not issubclass(plugin, Plugin.Plugin):
+            raise TypeError("Plugin must be of type Plugin")
+        plugin_instance = plugin(self, config)
+        self.plugins.append(plugin_instance)
+        if hasattr(plugin, "run"):
+            self.logger.info(f"Running Plugin {plugin.__name__}")
+            multiprocessing.Process(target=self.run_plugin, args=(plugin_instance,)).start()
+
+    def run_plugin(self, plugin_instance):
+        if not issubclass(plugin_instance.__class__, Plugin.Plugin):
+            raise TypeError("Plugin must be of type Plugin")
+        while True:
+            plugin_instance.run()
 
     def create_endpoint(self, path):
         def wrapper(handler):

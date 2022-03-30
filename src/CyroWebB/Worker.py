@@ -10,6 +10,8 @@ class Worker:
     def handle(self,socket: Union[Sockets.HTTP_Socket,Sockets.HTTP_Socket],request: Request.request):
         response = Response.response()
         path = request.path
+        for plugin in self.server.plugins:
+            plugin.intercept_request(request)
         for endpoint, handler in self.server.endpoints.items():
             endpoint = "." + endpoint + "."
             path = "." + path.decode() + "."
@@ -27,4 +29,6 @@ class Worker:
                 arguments = parse.parse(endpoint, path)
                 arguments = dict(arguments)
                 handler(request, response, **arguments)
+                for plugin in self.server.plugins:
+                    plugin.intercept_response(response)
                 socket.sendall(response.compile())
