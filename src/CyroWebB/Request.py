@@ -36,10 +36,10 @@ class request:
         } if self.method.upper() == b"POST" else {}
 
         self.data["COOKIE"] = {
-            key: value 
+            key.decode(): value.decode()
             for key, value in [
-                x.split(b"=") for x in (
-                    self.headers["Cookie"].split(b"; ") if b"Cookie" in self.headers else []
+                (x.split(b"=")[0],b"=".join(x.split(b"=")[1:])) for x in (
+                    self.headers[b"Cookie"].split(b"; ") if b"; " in self.headers[b"Cookie"] else [self.headers[b"Cookie"]]
                 )
             ]
         } if b"Cookie" in self.headers else {}
