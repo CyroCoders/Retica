@@ -4,10 +4,33 @@ import os
 from typing import Union
 
 class Worker:
+    """ The CyroWebB Worker
+
+    :param server: The server to use.
+    :type server: Server
+
+    :rtype: Worker
+    """
     def __init__(self, server):
+        """ Initialize the Worker.
+
+        :param server: The server to use.
+        :type server: Server
+
+        :rtype: Worker
+        """
         self.server = server
     
     def handle(self,socket: Union[Sockets.HTTP_Socket,Sockets.HTTP_Socket],request: Request.request):
+        """ Handle a request.
+
+        :param socket: The socket to use.
+        :type socket: Sockets.HTTP_Socket
+        :param request: The request to handle.
+        :type request: Request.request
+
+        :rtype: None
+        """
         response = Response.response()
         path = request.path
         for plugin in self.server.plugins:

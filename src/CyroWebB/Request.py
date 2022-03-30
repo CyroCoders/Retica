@@ -1,5 +1,26 @@
 class request:
-    def __init__(self) -> None:
+    """ A Request Object
+    
+    :param method: The HTTP Method.
+    :type method: str
+    :param path: The path of the request.
+    :type path: str
+    :param protocol: The protocol of the request.
+    :type protocol: str
+    :param headers: The headers of the request.
+    :type headers: dict
+    :param data: The data of the request.
+    :type data: dict
+    :param body: The body of the request.
+    :type body: bytes
+    
+    :rtype: Request
+    """
+    def __init__(self):
+        """ Initialize the request object.
+
+        :rtype: Request
+        """
         self.method = None
         self.path = None
         self.protocol = None
@@ -7,7 +28,14 @@ class request:
         self.data = {}
         self.body = None
 
-    def parse(self, string) -> None:
+    def parse(self, string: bytes) -> None:
+        """ Parse a request from a string and set the attributes of the request object.
+        
+        :param string: The Encoded Request String (Bytes).
+        :type string: bytes
+        
+        :rtype: None
+        """
         lines = string.split(b"\r\n")
         self.method, self.path, self.protocol = lines[0].split(b" ")
         for line in lines[1:]:
@@ -46,5 +74,9 @@ class request:
 
         self.path = self.path.split(b"?")[0] if b"?" in self.path else self.path
         
-    def compile(self) -> str:
+    def compile(self) -> bytes:
+        """ Compile the request into a string.
+
+            :rtpye: bytes
+        """
         return self.method + b" " +  self.path + b"?" + b"&".join(["=".join([key, value]) for key, value in self.data["GET"].items()]) + b" " + self.protocol + b"\r\n" + b"\r\n".join([key + b": " + value for key, value in self.headers.items()]) + b"\r\n\r\n" + self.body
