@@ -4,7 +4,7 @@ import threading, multiprocessing
 import logging
 
 class Server:
-    """ The CyroWebB Server
+    """ The Retica Server
 
     :param context: The server context to use.
     :type context: str

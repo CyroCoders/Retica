@@ -10,7 +10,7 @@ class response:
         """
         self.status = "200"
         self.headers = {}
-        self.body = "Hello From CyroWebB"
+        self.body = "Hello From Retica"
         self.protocol = "HTTP/1.1"
         self.content_type = "text/html"
         self.content_length = len(self.body)

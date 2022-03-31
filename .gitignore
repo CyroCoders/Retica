@@ -132,6 +132,6 @@ dmypy.json
 .pyre/
 
 setup.py
-src/CyroWebB/Production/__init__.py
-src/CyroWebB/_extensions.py
+src/Retica/Production/__init__.py
+src/Retica/_extensions.py
 main.py

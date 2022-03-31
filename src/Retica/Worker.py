@@ -4,7 +4,7 @@ import os
 from typing import Union
 
 class Worker:
-    """ The CyroWebB Worker
+    """ The Retica Worker
 
     :param server: The server to use.
     :type server: Server
