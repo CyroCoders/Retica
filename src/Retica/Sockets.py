@@ -38,10 +38,9 @@ class HTTP_Socket(object):
         :rtype: None
         """
         self.sock.bind((self.host, self.port))
+        self.sock.listen(5)
         if logger:
             logger.info(f"Listening On {self.host}:{self.port}")
-        self.sock.bind((self.host, self.port))
-        self.sock.listen(5)
     
     def send(self, data):
         """ Send data to the socket.
