@@ -1,8 +1,3 @@
-.. Retica documentation master file, created by
-   sphinx-quickstart on Fri Apr  1 12:46:55 2022.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Welcome to Retica's documentation!
 ==================================
 
@@ -10,6 +5,9 @@ Welcome to Retica's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   The Basics <intro>
+   The Request Class <request>
+   The Response Class <response>
 
 
 Indices and tables
