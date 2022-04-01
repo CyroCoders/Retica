@@ -25,7 +25,7 @@ Endpoints are functions that are assigned to a location and are called when a re
 .. code-block:: python3
 
     @retica.create_endpoint("/hello/{name}")
-    def index(request: Request.request, response: Response.response, **data):
+    def index(request: Retica.Request.request, response: Retica.Response.response, **data):
         response.body = f"Hello {data['name']}"
 
 Creating A Socket
@@ -39,8 +39,8 @@ Sockets are used to create a server that listens for incoming connections. The s
 
 .. code-block:: python3
 
-    http_socket = Sockets.HTTP_Socket("localhost", 80)
-    https_socket = Sockets.HTTPS_Socket("localhost", 443, "cert.pem", "key.pem")
+    http_socket = Retica.Sockets.HTTP_Socket("localhost", 80)
+    https_socket = Retica.Sockets.HTTPS_Socket("localhost", 443, "cert.pem", "key.pem")
 
 Running the Server
 ^^^^^^^^^^^^^^^^^^
@@ -64,11 +64,10 @@ This is the boilerplate code that you will need to create your own server.
     retica = Retica.Server(__name__)
 
     @retica.create_endpoint("/hello/{name}")
-    def index(request: Request.request, response: Response.response, **data):
+    def index(request: Retica.Request.request, response: Retica.Response.response, **data):
         response.body = f"Hello {data['name']}"
 
+    http_socket = Retica.Sockets.HTTP_Socket(Retica.Sockets.gethostname(), 80)
+
     if __name__ == "__main__":
-        server.run([
-            http_socket,
-            https_socket
-        ])
+        server.run([http_socket])
