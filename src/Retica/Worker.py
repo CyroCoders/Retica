@@ -1,6 +1,6 @@
 import parse
 from . import Sockets, Request, Response
-import os
+import os, mimetypes
 from typing import Union
 
 class Worker:
@@ -41,7 +41,7 @@ class Worker:
                 proceed = condition(request)
             if proceed==True:
                 endpoint = "." + endpoint + "."
-                path = "." + path.decode() + "."
+                path = "." + path + "."
                 if endpoint[-1] == "/":
                     endpoint = endpoint[:-1]
                 if endpoint[1] == "/":
@@ -59,12 +59,31 @@ class Worker:
                     for plugin in self.server.plugins:
                         plugin.intercept_response(response)
                     socket.sendall(response.compile())
+                    return
             elif isinstance(proceed, Response.response):
                 response.body = proceed
                 socket.sendall(proceed.compile())
+                return
             elif isinstance(proceed, str):
                 response.body = proceed
                 socket.sendall(response.compile())
+                return
             elif isinstance(proceed, bytes):
                 response.body = proceed
                 socket.sendall(proceed.compile())
+                return
+
+        static_path = os.path.join(os.path.dirname(os.path.abspath(self.server.context)), "static",*path.split("/"))
+        if os.path.isfile(static_path):
+            mimetype = mimetypes.guess_type(static_path)
+            response.body = open(static_path, "rb").read()
+            response.headers["Content-Type"] = mimetype[0] or "application/octet-stream"
+            if mimetype[1]:
+                response.headers["Content-Encoding"] = mimetype[1]
+            socket.sendall(response.compile())
+            return
+        else:
+            response.status = "404"
+            response.body = "404 Not Found"
+            socket.sendall(response.compile())
+            return
