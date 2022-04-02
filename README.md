@@ -6,7 +6,7 @@
 
 Retica Is A Performant, Easy To Use Web Server Based On Python With HTTPS & Plugins Support.
 
-### Retica V/S Flask
+## Retica V/S Flask
 
 The Following Graph Shows A Performane Comparision Between Flask & Retica.
 
@@ -15,12 +15,11 @@ The Following Graph Shows A Performane Comparision Between Flask & Retica.
 
 ![Flask V/S Retica](https://github.com/CyroCoders/Retica/raw/media/Flask-VS-Retica.png)
 
-
 ## Installing Retica
 
 The easiest way to install Retica is to use the pip command line tool.
 
-``` {.bash}
+``` shell
 $~ pip install retica
 ```
 
@@ -52,10 +51,10 @@ Sockets are used to open a server port that listens for incoming
 connections. The server will listen on the specified port and host.
 Sockets can use 2 protocols:
 
-1.  HTTP
-2.  HTTPS (Certificate & key files are required)
+1. HTTP
+2. HTTPS (Certificate & key files are required)
 
--   You can also create your own protocols(In Development).
+- You can also create your own protocols(In Development).
 
 ``` python
 http_socket = Retica.Sockets.HTTP_Socket("localhost", 80)
