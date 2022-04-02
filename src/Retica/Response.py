@@ -1,3 +1,6 @@
+from email import header
+
+
 class response:
     """ A Response Object
     
@@ -39,9 +42,9 @@ class response:
             :rtype: bytes
         """
         self.content_length = len(self.body)
-        self.headers["Content-Type"] = self.content_type
-        self.headers["Content-Length"] = str(self.content_length)
-        self.headers["Connection"] = self.connection
+        self.headers["Content-Type"] = str(self.headers["Content-Type"] if "Content-Type" in self.headers.keys() else self.content_type)
+        self.headers["Content-Length"] = str(self.headers["Content-Length"] if "Content-Length" in self.headers.keys() else self.content_length)
+        self.headers["Connection"] = str(self.headers["Connection"] if "Connection" in self.headers.keys() else self.connection)
         if type(self.body) == str:
             self.body = self.body.encode()
         return (self.protocol + " " + self.status + "\r\n" + "\r\n".join([key + ": " + value for key, value in self.headers.items()]) + "\r\n\r\n").encode() + self.body
