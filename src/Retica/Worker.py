@@ -33,6 +33,7 @@ class Worker:
         """
         response = Response.response()
         path = request.path
+        path = path.decode()
         for plugin in self.server.plugins:
             plugin.intercept_request(request)
         for endpoint, (handler,condition) in self.server.endpoints.items():
