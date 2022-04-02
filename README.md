@@ -30,7 +30,7 @@ Once you have installed Retica, you can import it into your Python
 environment. The server class is used to create a server, in which you
 can add endpoints(locations) and open HTTP(s) ports.
 
-``` {.python3}
+``` python
 import Retica
 retica = Retica.Server(__name__)
 ```
@@ -40,7 +40,7 @@ retica = Retica.Server(__name__)
 Endpoints are functions that are assigned to a location and are called
 when a request is made to that location.
 
-``` {.python3}
+``` python
 @retica.create_endpoint("/hello/{name}")
 def index(request: Retica.Request.request, response: Retica.Response.response, **data):
     response.body = f"Hello {data['name']}"
@@ -57,7 +57,7 @@ Sockets can use 2 protocols:
 
 -   You can also create your own protocols(In Development).
 
-``` {.python3}
+``` python
 http_socket = Retica.Sockets.HTTP_Socket("localhost", 80)
 https_socket = Retica.Sockets.HTTPS_Socket("localhost", 443, "cert.pem", "key.pem")
 ```
@@ -67,7 +67,7 @@ https_socket = Retica.Sockets.HTTPS_Socket("localhost", 443, "cert.pem", "key.pe
 To run the server, you must call the run method on the server. An array
 of sockets should be passed in as an argument.
 
-``` {.python3}
+``` python
 if __name__ == "__main__":
     server.run([
         http_socket,
@@ -80,7 +80,7 @@ if __name__ == "__main__":
 This is the boilerplate code that you will need to create your own
 server.
 
-``` {.python3}
+``` python
 import Retica
 retica = Retica.Server(__name__)
 
