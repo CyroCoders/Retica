@@ -92,14 +92,26 @@ class Server:
         :rtype: None
         """
         self.logger.info("Starting Server")
-        for socket in sockets:
-            socket.bind(logger=self.logger)
         while True:
-            read_socks,_,_ = select.select(sockets, [], [])
-            for sock in read_socks:
-                self.workers.append(threading.Thread(target=self.handle_request, args=(*sock.sock.accept(),)))
-                self.workers[-1].start()
-            read_socks = []
+            try:
+                for socket in sockets:
+                    socket.bind(logger=self.logger)
+                while True:
+                    read_socks,_,_ = select.select(sockets, [], [], 0)
+                    for sock in read_socks:
+                        self.workers.append(threading.Thread(target=self.handle_request, args=(*sock.sock.accept(),)))
+                        self.workers[-1].start()
+                    read_socks = []
+            except KeyboardInterrupt:
+                self.logger.info("Stopping Server")
+                for socket in sockets:
+                    socket.close()
+                for worker in self.workers:
+                    worker.join()
+                sys.exit(0)
+            except Exception as e:
+                self.logger.error(f"Error: {e}")
+                self.logger.info("Restarting Server")
 
     def handle_request(self, socket, address):
         """ Handle a request.
