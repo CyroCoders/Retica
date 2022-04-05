@@ -68,7 +68,7 @@ of sockets should be passed in as an argument.
 
 ``` python
 if __name__ == "__main__":
-    server.run([
+    retica.run([
         http_socket,
         https_socket
     ])
@@ -90,5 +90,5 @@ def index(request: Retica.Request.request, response: Retica.Response.response, *
 http_socket = Retica.Sockets.HTTP_Socket(Retica.Sockets.gethostname(), 80)
 
 if __name__ == "__main__":
-    server.run([http_socket])
+    retica.run([http_socket])
 ```
