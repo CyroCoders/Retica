@@ -51,7 +51,7 @@ class Server:
         self.plugins.append(plugin_instance)
         if hasattr(plugin, "run"):
             self.logger.info(f"Running Plugin {plugin.__name__}")
-            multiprocessing.Process(target=self.run_plugin, args=(plugin_instance,)).start()
+            self.runner_plugins.append(multiprocessing.Process(target=self.run_plugin, args=(plugin_instance,)).start())
 
     def run_plugin(self, plugin_instance):
         """ Run a plugin.
