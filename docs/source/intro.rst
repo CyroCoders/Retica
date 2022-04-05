@@ -49,7 +49,7 @@ To run the server, you must call the run method on the server. An array of socke
 .. code-block:: python3
 
     if __name__ == "__main__":
-        server.run([
+        retica.run([
             http_socket,
             https_socket
         ])
@@ -70,4 +70,4 @@ This is the boilerplate code that you will need to create your own server.
     http_socket = Retica.Sockets.HTTP_Socket(Retica.Sockets.gethostname(), 80)
 
     if __name__ == "__main__":
-        server.run([http_socket])
+        retica.run([http_socket])
