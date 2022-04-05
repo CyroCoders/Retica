@@ -1,6 +1,14 @@
 ![Retica Banner](https://github.com/CyroCoders/Retica/raw/media/Retica-Banner.png)
 
+Documentation Status:
+
 [![Documentation Status](https://readthedocs.org/projects/retica/badge/?version=latest)](https://retica.readthedocs.io/en/latest/?badge=latest)
+
+Contact Us:
+
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/%2B919073413078?text=Hello%2C%20I%20am%20here%20from%20the%20'CyroCoders%2FRetica'%20GitHub%20Repository.%20)
+[![Discord](https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/ewaC9M7GS6)
+[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/CyroCoders?s=20&t=7DmVZA4Dvr8GioWtcwRONw)
 
 # The Retica Backend Server
 
