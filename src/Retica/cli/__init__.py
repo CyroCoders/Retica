@@ -25,7 +25,7 @@ def create():
         f.write('import Retica\n')
         f.write('import Retica.Render\n')
         f.write('retica = Retica.Server(__name__)\n\n')
-        f.write('templator = Retica.Render.TemplateRender(retica)\n\n')
+        f.write(f'templator = Retica.Render.TemplateRender(retica,template_dir="{templates_folder}")\n\n')
         f.write('@retica.create_endpoint("/hello/{name}")\n')
         f.write('def index(request: Retica.Request.request, response: Retica.Response.response, **data):\n')
         f.write('    response.body = f"Hello {data[\'name\']}"\n\n')
