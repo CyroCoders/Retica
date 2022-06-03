@@ -55,8 +55,7 @@ class Worker:
                     endpoint = endpoint[1:-1]
                     path = path[1:-1]
                     if parse.parse(endpoint, path):
-                        arguments = parse.parse(endpoint, path)
-                        arguments = dict(arguments)
+                        arguments = parse.parse(endpoint, path).named
                         handler(request, response, **arguments)
                         for plugin in self.server.plugins:
                             plugin.intercept_response(response)
