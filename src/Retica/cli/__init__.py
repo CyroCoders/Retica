@@ -16,10 +16,10 @@ def create():
     print("Creating project...")
 
     import os
-    os.makedirs(os.path.dirname(project_name), exist_ok=True)
-    os.makedirs(os.path.dirname(os.path.join(project_name, templates_folder)), exist_ok=True)
-    os.makedirs(os.path.dirname(os.path.join(project_name, plugins_folder)), exist_ok=True)
-    os.makedirs(os.path.dirname(os.path.join(project_name, "static")), exist_ok=True)
+    os.makedirs(project_name, exist_ok=True)
+    os.makedirs(os.path.join(project_name, templates_folder), exist_ok=True)
+    os.makedirs(os.path.join(project_name, plugins_folder), exist_ok=True)
+    os.makedirs(os.path.join(project_name, "static"), exist_ok=True)
 
     with open(os.path.join(project_name, "app.py"), "w") as f:
         f.write('import Retica\n')
