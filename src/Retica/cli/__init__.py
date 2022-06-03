@@ -1,8 +1,12 @@
 import argparse
 
 def main():
-    args = argparse.ArgumentParser(description="The Retica CLI. Retica Is A Performant, Easy To Use Web Server Based On Python With HTTPS & Plugins Support.")
-    args.add_argument("-c", "--create", help="Create a new project.", default=True, action="store_true")
+    parser = argparse.ArgumentParser(description="The Retica CLI. Retica Is A Performant, Easy To Use Web Server Based On Python With HTTPS & Plugins Support.")
+    subparsers = parser.add_subparsers(dest='command')
+    subparsers.add_parser('run', help="Run the current project.")
+    parser.add_argument("server_object", type=str, const="app:retica", default="app:retica", nargs='?', help="Server object (app:retica)")
+    parser.add_argument("host", type=str, const="localhost:80", default="localhost:80", nargs='?', help="Hostname and port (localhost:80)")
+    subparsers.add_parser('create', help="Create a new project.")
 
     args = args.parse_args()
     if args.create:
