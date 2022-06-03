@@ -8,7 +8,7 @@ def main():
     if args.create:
         create()
 
-def create():
+def create(args):
     project_name = str(input("Project Name: ") or "Retica Project")
     templates_folder = str(input("Templates Folder: ") or "Templates")
     plugins_folder = str(input("Plugins Folder: ") or "Plugins")
