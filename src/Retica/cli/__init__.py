@@ -8,9 +8,14 @@ def main():
     parser.add_argument("host", type=str, const="localhost:80", default="localhost:80", nargs='?', help="Hostname and port (localhost:80)")
     subparsers.add_parser('create', help="Create a new project.")
 
-    args = args.parse_args()
-    if args.create:
-        create()
+    args = parser.parse_args()
+    match args.command:
+        case 'create':
+            create(args)
+            return
+        case 'run':
+            run(args)
+            return
 
 def create(args):
     project_name = str(input("Project Name: ") or "Retica Project")
