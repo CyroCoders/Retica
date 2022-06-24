@@ -1,7 +1,22 @@
 def create(args):
+    frontend_libraries = {
+                            'React': [
+                                '<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>',
+                                '<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>',
+                                '<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>'
+                            ],
+                            'Retica': [
+
+                            ]
+                        }
     project_name = str(input("Project Name: ") or "Retica Project")
     templates_folder = str(input("Templates Folder: ") or "Templates")
     plugins_folder = str(input("Plugins Folder: ") or "Plugins")
+
+    if input("Import Frontend Libraries? (y/n) ") == "y":
+        for index, value in enumerate(frontend_libraries.keys()):
+            print(f"{index+1}. {value}")
+        frontend_libraries = input("Select Frontend Library(Separate With ','. No Space): ")
 
     print("Creating project...")
 
