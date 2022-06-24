@@ -11,6 +11,6 @@ def run(args):
 
     server = getattr(m, a)
 
-    if __name__ == "Retica.cli":
+    if __name__ == "Retica.cli.run":
         sock = Sockets.HTTP_Socket(args.host.split(":")[0], int(args.host.split(":")[1]))
         server.run([sock])
