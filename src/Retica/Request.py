@@ -48,7 +48,7 @@ class request:
         self.data["GET"] = {
             key.decode(): value.decode()
             for key, value in [
-                 x.split(b"=") for x in (
+                x.split(b"=") if type(x) != int else (f"{x}".encode(),f"{x}".encode()) for x in (
                     self.path.split(b"?")[1].split(b"&") if b"&" in self.path.split(b"?")[1] else self.path.split(b"?")[1]
                 )
             ]
