@@ -21,11 +21,11 @@ def create(args):
 
     print("Creating project...")
 
+    import tarfile
     import os
-    os.makedirs(project_name, exist_ok=True)
-    os.makedirs(os.path.join(project_name, templates_folder), exist_ok=True)
-    os.makedirs(os.path.join(project_name, plugins_folder), exist_ok=True)
-    os.makedirs(os.path.join(project_name, "static"), exist_ok=True)
+    
+    file = tarfile.open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "resources/default-homepage.tar.gz"))
+    file.extractall(os.path.join(os.getcwd(), project_name))
 
     with open(os.path.join(project_name, "app.py"), "w") as f:
         f.write('import Retica\n')
