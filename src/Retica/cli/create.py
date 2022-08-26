@@ -10,8 +10,6 @@ def create(args):
                             ],
                         }
     project_name = str(input("Project Name: ") or "Retica Project")
-    templates_folder = str(input("Templates Folder: ") or "Templates")
-    plugins_folder = str(input("Plugins Folder: ") or "Plugins")
 
     if input("Import Frontend Libraries? (y/n) ") == "y":
         for index, value in enumerate(frontend_libraries.keys()):
