@@ -10,6 +10,9 @@ def create(args):
                             ],
                         }
     project_name = str(input("Project Name: ") or "Retica Project")
+    project_description = str(input("Project Description: ") or "Retica Is A Performant, Easy To Use Web Server Based On Python With HTTPS & Plugins Support.")
+    project_author = str(input("Project Author: ") or "CyroCoders")
+    project_keywords = str(input("Project Keywords: ") or "Retica,Python,Web Server,Web Framework,CyroCoders")
 
     if input("Import Frontend Libraries? (y/n) ") == "y":
         for index, value in enumerate(frontend_libraries.keys()):
