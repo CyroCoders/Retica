@@ -5,9 +5,9 @@ def create(args):
                                 '<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>',
                                 '<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>'
                             ],
-                            'Retica': [
-
-                            ]
+                            'Vue': [
+                                '<script src="https://unpkg.com/vue@3"></script>'
+                            ],
                         }
     project_name = str(input("Project Name: ") or "Retica Project")
     templates_folder = str(input("Templates Folder: ") or "Templates")
