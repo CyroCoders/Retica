@@ -17,7 +17,7 @@ def create(args):
     if input("Import Frontend Libraries? (y/n) ") == "y":
         for index, value in enumerate(frontend_libraries.keys()):
             print(f"{index+1}. {value}")
-        frontend_libraries = input("Select Frontend Library(Separate With ','. No Space): ")
+        frontend_libraries_selection = input("Select Frontend Library(Separate With ','. No Space): ")
 
     print("Creating project...")
 
