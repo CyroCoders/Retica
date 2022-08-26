@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome To Retica's Default Homepage</title>
+    <link rel="stylesheet" href="/css/index.css">
+    {% for name, content in metadata.items() %}
+        <meta name="{{ name }}" content="{{ content }}">
+    {% endfor %}
+</head>
+<body>
+    <nav>
+        The Retica Backend Framework
+    </nav>
+    <div id="content">
+        <h1>Welcome To Retica's Default Homepage</h1>
+        <p>
+            This is the default homepage of the Retica Backend Framework.
+        </p>
+        <img src="/img/undraw_building_websites_i78t.svg" id="center-image" alt="">
+        <p>
+            You can change this page by editing <code>/templates/index.jinja</code>.
+            <br/>
+            You can create new pages by editing <code>app.py</code>.
+            <br/>
+            Documentation is available <a href="https://retica.readthedocs.io/en/latest">here</a>.
+        </p>
+    </div>
+    {% for key, value in libraries.items() %}
+        {{value}}
+    {% endfor %}
+</body>
+</html>
