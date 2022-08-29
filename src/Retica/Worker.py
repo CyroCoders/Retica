@@ -2,6 +2,7 @@ import parse
 from . import Sockets, Request, Response
 import os, mimetypes
 from typing import Union
+import inspect
 
 class Worker:
     """ The Retica Worker
@@ -56,7 +57,15 @@ class Worker:
                     path = path[1:-1]
                     if parse.parse(endpoint, path):
                         arguments = parse.parse(endpoint, path).named
-                        handler(request, response, **arguments)
+                        if inspect.isclass(handler):
+                            if request.method.lower().decode() in handler.__dict__:
+                                handler.__dict__[request.method.lower().decode()](request, response, **arguments)
+                            else:
+                                response.headers['Allow'] = 'GET, POST'
+                                response.status = '405'
+                                response.body = 'Method Not Allowed'
+                        else:
+                            handler(request, response, **arguments)
                         for plugin in self.server.plugins:
                             plugin.intercept_response(response)
                         socket.sendall(response.compile())
