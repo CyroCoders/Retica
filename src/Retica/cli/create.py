@@ -14,6 +14,7 @@ def create(args):
     project_author = str(input("Project Author: ") or "CyroCoders")
     project_keywords = str(input("Project Keywords: ") or "Retica,Python,Web Server,Web Framework,CyroCoders")
 
+    frontend_libraries_selection = None
     if input("Import Frontend Libraries? (y/n) ") == "y":
         for index, value in enumerate(frontend_libraries.keys()):
             print(f"{index}. {value}")
