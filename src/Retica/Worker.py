@@ -47,11 +47,11 @@ class Worker:
                     path = "." + path + "."
                     if endpoint[-1] == "/":
                         endpoint = endpoint[:-1]
-                    if endpoint[1] == "/":
+                    if endpoint[0] == "/":
                         endpoint = endpoint[1:]
                     if path[-1] == "/":
                         path = path[:-1]
-                    if path[1] == "/":
+                    if path[0] == "/":
                         path = path[1:]
                     endpoint = endpoint[1:-1]
                     path = path[1:-1]
