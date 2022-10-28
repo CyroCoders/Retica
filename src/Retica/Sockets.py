@@ -1,5 +1,7 @@
+import asyncio
 import socket
 import ssl
+import websockets
 
 def gethostname():
     """ Get the hostname of the current machine. """
@@ -145,3 +147,76 @@ class HTTPS_Socket(HTTP_Socket):
         :rtype: None
         """
         super().close()
+
+class WebSocket(object):
+    """ A WebSocket
+
+    :param host: The host to bind to.
+    :type host: str
+    :param port: The port to bind to.
+    :type port: int
+
+    :rtype: WebSocket
+    """
+    def __init__(self, host, port):
+        """ Initialize the WebSocket.
+
+        :param host: The host to bind to.
+        :type host: str
+        :param port: The port to bind to.
+        :type port: int
+
+        :rtype: WebSocket
+        """
+        self.host = host
+        self.port = port
+        self.sock = websockets.serve(self.handle, host, port)
+        self.endpoints = {}
+
+    def create_endpoint(self, path, conditional=None):
+        """ Create an endpoint for the WebSocket.
+
+        :param path: The path to the endpoint.
+        :type path: str
+
+        :rtype: None
+        """
+        def wrapper(handler):
+            if(not(self.endpoints.__contains__(path))):
+                self.endpoints[path] = (handler, conditional)
+                return handler
+            else:
+                raise AssertionError(f"Endpoint {path}:{handler} Already Exists!")#self.error["urlcatcherexists"])
+        return wrapper
+
+    def handle(self, websocket, path):
+        """ Handle the WebSocket.
+
+        :param websocket: The WebSocket to handle.
+        :type websocket: websockets.WebSocketServerProtocol
+        :param path: The path to the endpoint.
+        :type path: str
+
+        :rtype: None
+        """
+        if(self.endpoints.__contains__(path)):
+            handler, conditional = self.endpoints[path]
+            if(conditional):
+                if(conditional(websocket)):
+                    handler(websocket)
+            else:
+                handler(websocket)
+        else:
+            raise AssertionError(f"Endpoint {path} Does Not Exist!")
+
+    def bind(self, logger=None):
+        """ Bind the socket to the host and port.
+
+        :param logger: The logger to use.
+        :type logger: Logger
+
+        :rtype: None
+        """
+        asyncio.get_event_loop().run_until_complete(self.sock)
+        if logger:
+            logger.info(f"Listening On {self.host}:{self.port}")
