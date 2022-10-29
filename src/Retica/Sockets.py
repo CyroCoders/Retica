@@ -189,7 +189,7 @@ class WebSocket(object):
                 raise AssertionError(f"Endpoint {path}:{handler} Already Exists!")#self.error["urlcatcherexists"])
         return wrapper
 
-    def handle(self, websocket, path):
+    async def handle(self, websocket, path):
         """ Handle the WebSocket.
 
         :param websocket: The WebSocket to handle.
@@ -203,9 +203,9 @@ class WebSocket(object):
             handler, conditional = self.endpoints[path]
             if(conditional):
                 if(conditional(websocket)):
-                    handler(websocket)
+                    await handler(websocket)
             else:
-                handler(websocket)
+                await handler(websocket)
         else:
             raise AssertionError(f"Endpoint {path} Does Not Exist!")
 
@@ -218,5 +218,6 @@ class WebSocket(object):
         :rtype: None
         """
         asyncio.get_event_loop().run_until_complete(self.sock)
+        asyncio.get_event_loop().run_forever()
         if logger:
             logger.info(f"Listening On {self.host}:{self.port}")
